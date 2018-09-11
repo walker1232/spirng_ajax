@@ -74,6 +74,7 @@ public class MemberController {
 		System.out.println("MemberController modify 진입후 정보 " + member);
 		return "auth:common/content.tiles";
 	}*/
+	//주석
 	@RequestMapping(value="/remove", method=RequestMethod.POST)
 	public String remove(@ModelAttribute("member") MemberDTO member
 						, @ModelAttribute("user") MemberDTO user
