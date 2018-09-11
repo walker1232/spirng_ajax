@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gms.web.mapper.MemberMapper">
+  <select id="selectOne" resultType="com.gms.web.domain.MemberDTO">
+    SELECT * from MEMBER 
+    WHERE userid LIKE #{userid}
+    <!-- SELECT * from MEMBER 
+    WHERE userid LIKE #{userid} DTO 변경 후 -->
+  </select>
+  <select id="login" resultType="com.gms.web.domain.MemberDTO">
+  	SELECT * FROM MEMBER
+  	<!-- WHERE ${userid} LIKE #{userid} AND ${password} LIKE #{password} -->
+	WHERE userid LIKE #{userid} AND password LIKE #{password}
+	<!-- WHERE userid LIKE #{userid} AND password LIKE #{password} DTO 변경 후 -->
+  </select>
+  <insert id="insert">
+  INSERT INTO member (userid, teamid, name, age, roll, password, ssn, gender)
+  	VALUES(#{userid}, #{teamid}, #{name}, #{age}, #{roll}, #{password}, #{ssn}, #{gender})
+  	<!-- INSERT INTO member (userid, teamid, name, age, roll, password, ssn, gender)
+  	VALUES(#{userid}, #{teamid}, #{name}, #{age}, #{roll}, #{password}, #{ssn}, #{gender}) DTO 변경 후 -->
+  </insert>
+  <delete id="delete">
+  DELETE FROM MEMBER where userid LIKE #{userid} AND password LIKE #{password}
+  <!-- DELETE FROM MEMBER where userid LIKE #{userid} AND password LIKE #{password} DTO 변경 후 -->
+</delete>
+<update id="update">
+  UPDATE MEMBER SET
+    password = #{password},
+    teamid = #{teamid},
+    roll = #{roll}
+  WHERE userid = #{userid}
+  <!-- UPDATE MEMBER SET
+    password = #{password},
+    teamid = #{teamid},
+    roll = #{roll}
+  WHERE userid = #{userid} DTO 변경 후 -->
+</update>
+</mapper>

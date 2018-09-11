@@ -1,0 +1,138 @@
+@charset "UTF-8";
+
+	
+	body{
+			font-family: 'Malgun Gothic', 'Verdana';
+			background-color: #008040;
+			color: #000000;
+			margin: 0;
+			padding: 0;
+		}
+	h1, h2, h3, h4, h5, h6{
+		font-size: 1.5em;
+	}
+	h1{
+		font-size: 2em;
+		padding-bottom: 0;
+		margin-bottom: 0;
+		color: black;
+	}
+	div#wrapper{
+		width: 90%;
+		padding-bottom: 0;
+		margin-bottom: 0;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	div#header{
+		position: relative;
+		margin-bottom: 0;
+		padding: 0;
+		color: #000;
+	}
+	div#title{
+		float: left;
+		text-align: left;
+		display: block;
+	}
+	div#login-box{
+		float: right;
+		margin: 10px;
+		font-size: 1.1em;
+		display: block;
+		color: #fff;
+	}
+	div#login-box a:hover{
+		color: #fff;
+		text-decoration: none;
+	}
+	div#login-box a:active{
+		color: #ff0000;
+		text-decoration: none;
+	}
+	div#menu-box{
+		clear: both;
+		margin-top: 40px;
+	}
+	ul#menu{
+		text-align: right;
+		margin: 0;
+		border-bottom: 1px #0000a0;
+		position: relative;
+	}
+	ul#menu li{
+		display: inline;
+		list-style: none;
+		background-color: #400080;
+	}
+	ul#menu li a{
+		padding: 10px 20px;
+		background-color: #800080;
+		font-weight: bold;
+		text-decoration: none;
+		line-height: 2.8em;
+		color: black;
+	}
+	ul#menu li a:hover{
+		background-color: #ff80c0;
+		text-decoration: none;
+	}
+	ul#menu li a:active{
+		background-color: #0080ff;
+		text-decoration: none;
+	}
+	div#footer{
+		clear: both;
+		color: #fff;
+		text-align: center;
+		margin: 0;
+		padding: 10px 0;
+		line-height: normal;
+		font-size: 1.5em;
+	}
+	div#header h1{
+		color: #fff;
+		padding: 5px 0;
+		margin: 0;
+		border: none;
+		line-height: 2em;
+		font-weight: bold;
+		font-size: 32px;
+	}
+	div#content{
+		padding: 15px 30px;
+		background-color: #ffffff;
+		margin-bottom: 30px;
+		min-height: 400px;
+	}
+	div#content-box{
+		clear: both;
+		margin-top: 40px;
+	}
+	table,th,td{border:1px solid gray}
+	.bgColorYellow{background-color: #ffff00}
+	.center{margin: 0 auto}
+	.width100pt{width: 100%}
+	.width90pt{width:90%}
+	.width80pt{width:80%}
+	.fontColorBlue{color:blue}
+	.cursor{cursor:point}
+	.marginTop30px{margin-top: 30px}
+	.marginTop50px{margin-top: 50px}
+	.marginLeft200px{margin-left: 200px}
+	.marginFight200px{margin-right: 200px}
+	.marginBot30px{margin-bottom: 30px}
+	.marginBot50px{margin-bottom: 50px}
+	.width300px{width:300px}
+	.floatRight{float:right;}
+	
+	.pageBox{
+		list-style: none;	
+		padding: 0;
+		margin: 0;
+	}
+	.pageBox li{
+		display:inline;
+	}
+	
+	
