@@ -44,9 +44,7 @@ public class MemberController {
 						   , @ModelAttribute("user") MemberDTO user) {
 		logger.info("\n--------- MemberController {} !!-----","retrieve()");
 		System.out.println("MemberController retrieve member 징입 정보 " + member);
-		//System.out.println("MemberController retrieve user 정보 " + user.getMemID());
 		System.out.println("MemberController retrieve user 정보 " + user.getUserid());
-		//member.setMemID(user.getMemID());
 		member.setUserid(user.getUserid());
 		model.addAttribute("user", memberService.retrieve(member));
 		System.out.println("MemberController retrieve member 징입후 정보 " + member);

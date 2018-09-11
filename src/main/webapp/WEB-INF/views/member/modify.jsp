@@ -13,7 +13,6 @@
 		<!-- <td rowspan="3" colspan="2" >공란</td> -->
 		<td>아이디</td>
 		<td>${user.userid}</td>
-		<%-- <td>${user.userid}</td> DTO 변경 후 --%>
 	</tr>
 	<tr>
 		<td>이름</td>

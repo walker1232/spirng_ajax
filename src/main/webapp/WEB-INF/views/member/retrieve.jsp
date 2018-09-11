@@ -12,7 +12,6 @@
 		<td rowspan="3" width="200" height="150"><img src="${img}/${profile}" width="200" height="150"/></td>
 		<td>아이디</td>
 		<td colspan="2">${user.userid}</td>
-		<%-- <td colspan="2">${user.userid}</td> DTO 변경 후--%>
 	</tr>
 	<tr>
 		<td>이름</td>
@@ -27,7 +26,6 @@
 		<td>${user.age}</td>
 		<td>팀명</td>
 		<td>${user.teamid}</td>
-		<%-- <td>${user.teamid}</td> DTO 변경 후--%>
 	</tr>
 	<tr>
 		<td>성별</td>

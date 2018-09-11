@@ -59,7 +59,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void remove(MemberDTO p) {
-		System.out.println("remove 2 " + p.getUserid());
+		//System.out.println("remove 2 " + p.getUserid());
 		//System.out.println("remove 2 " + p.getUserid()); DTO 변경후
 		memberDAO.delete(p);
 		
@@ -67,7 +67,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public MemberDTO login(MemberDTO p) {
-		System.out.println("Login 4 " + p);
+		//System.out.println("Login 4 " + p);
 		return memberDAO.login(p);
 	}
 
