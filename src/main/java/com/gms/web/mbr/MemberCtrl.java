@@ -109,7 +109,7 @@ public class MemberCtrl {
 		Util.Log.accept(member.toString());
 		
 		return view;
-		// 위의 코드 전 방식
+		// 위의 코드 전 방식 테스트 주석
 		//Predicate<String> p2 = s -> s.equals("auth:common/content.tiles");
 				/*if(Predicate.isEqual("auth:common/content.tiles").test(view)) {
 					member = mbrMapper.selectOne(param);
