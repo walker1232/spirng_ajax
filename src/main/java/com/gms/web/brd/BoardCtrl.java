@@ -83,7 +83,6 @@ public class BoardCtrl {
 	public String remove(@ModelAttribute("member") Member member, Model model) {
 		logger.info("MemberController remove ::: {}.", "ENTER");
 		System.out.println("remove 1 " + member.getUserid());
-		System.out.println("member session : "+ member.getUserid());
 		memberService.remove(member);
 		return "redirect:/";
 	}

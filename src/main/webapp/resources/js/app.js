@@ -16,7 +16,7 @@ app = {
 		},
 	    onCreate : ()=>{
 	    	console.log('step 3 ::');
-	    	app.setContenView();
+	    	app.setContentView();
 	    	$('#login_btn').click(()=>{
 	    		/*alert(app.session.path('ctx')+'/move');*/
 	    		console.log(app.x()+'/move');
@@ -85,95 +85,7 @@ app = {
 	    	});
 	    	
 	    },
-	    setContenView : ()=>{
-	    	console.log('step 4 ::'+app.session.path('js'));
+	    setContentView : ()=>{
+	    	console.log('step 4 ::'+app.session.path('js'));	
 	    }
 };
-app.session = { // 세션은 여기에 저장
-		ctx : x =>{
-			console.log('step 2 ::'+x);
-			sessionStorage.setItem('ctx', x);
-			sessionStorage.setItem('js', x+'/resources/js');
-			sessionStorage.setItem('css', x+'/resources/css');
-			sessionStorage.setItem('img', x+'/resources/img');
-			
-		},
-		path : x =>{
-			return sessionStorage.getItem(x);
-		}
-};
-app.x = ()=>{
-	return app.session.path('ctx');
-};
-app.j = ()=>{
-	return app.session.path('js');
-};
-app.c = ()=>{
-	return app.session.path('css');
-};
-app.i = ()=>{
-	return app.session.path('img');
-};
-
-app.userid = ()=>{
-	return sessionStorage.getItem('memID');
-}
-
-var user = user || {};
-user.session = x =>{
-	$.each(x, (k, v)=>{
-		/*alert('key:'+k+', value:'+v);*/
-		sessionStorage.setItem(k, v);
-	});
-	/*alert(sessionStorage.getItem('memID'));*/
-}
-
-user.get = x=>{
-	return sessionStorage.getItem(x);
-}
-
-
-
-
-
-/*app.memID=()=>{
-	return app.sessionStorage.getItem('memID');
-}
-app.name=()=>{
-	return app.sessionStorage.getItem('name');
-}
-app.teamID=()=>{
-	return app.sessionStorage.getItem('teamID')
-}
-app.ssn=()=>{
-	return app.sessionStorage.getItem('ssn');
-}
-app.gender=()=>{
-	return app.sessionStorage.getItem('gender');
-}
-app.age=()=>{
-	return app.sessionStorage.getItem('age');
-}
-app.roll=()=>{
-	return app.sessionStorage.getItem('roll');
-}
-app.subject=()=>{
-	return app.sessionStorage.getItem('subject');
-}*/
-
-/*var user = {
-		set : x=>{
-			sessionStorage.setItem('memID',x.memID);
-			sessionStorage.setItem('teamID',x.teamID);
-			sessionStorage.setItem('name',x.name);
-			sessionStorage.setItem('roll',x.roll);
-			sessionStorage.setItem('password',x.password);
-			sessionStorage.setItem('ssn',x.ssn);
-			sessionStorage.setItem('gender',x.gender);
-			sessionStorage.setItem('age',x.age);
-			sessionStorage.setItem('subject',x.subject);
-		},
-		get : x=>{
-			return sessionStorage.getItem(x);
-		}
-};*/

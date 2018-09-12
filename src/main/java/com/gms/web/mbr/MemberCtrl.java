@@ -15,16 +15,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.gms.web.cmm.Util;
 
-@Controller
+@RestController
 @RequestMapping("/member")
-@SessionAttributes("user")
 public class MemberCtrl {	
 	static final Logger logger = LoggerFactory.getLogger(MemberCtrl.class);
 	@Autowired Member member;
@@ -90,7 +91,7 @@ public class MemberCtrl {
 		System.out.println("MemberController remove 진입후 정보 " + member);
 		return "redirect:/";
 	}
-	@RequestMapping(value="/login", method=RequestMethod.POST)
+	@PostMapping(value="/login")
 	public String login(@ModelAttribute("member") Member param, Model model,
 			HttpSession session) {
 		logger.info("MemberController login ::: {}.", "ENTER");
@@ -135,12 +136,7 @@ public class MemberCtrl {
 		System.out.println(memInfo);*/
 		// syso -> member 정보
 	}
-	@RequestMapping("/logout")
-	public String logout(SessionStatus session) {
-		logger.info("MemberController logout ::: {}.", "ENTER");
-		session.setComplete();
-		return "redirect:/";
-	}
+	
 	@RequestMapping("/fileupload")
 	public void fileupload() {}
 }
