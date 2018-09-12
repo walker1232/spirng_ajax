@@ -120,7 +120,7 @@ public class MemberCtrl {
 		Predicate<String> p = s -> !s.equals("");
 		String view = "public:member/login.tiles";
 		if(p.test(mbrMapper.exist(param.getUserid()))) {
-			Function<Member, String> f = (t)->{
+			Function<Member, String> f = (t)->{	// Member input type, String return type. Function<input type, return type>
 				return mbrMapper.login(t);
 			};
 			view = (f.apply(param) != null) ? "auth:common/content.tiles" : "public:member/login.tiles";
