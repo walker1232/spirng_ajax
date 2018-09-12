@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.gms.web.cmm.Util;
+
 @Controller
 @RequestMapping("/member")
 @SessionAttributes("user")
@@ -29,6 +31,7 @@ public class MemberCtrl {
 	@Autowired MemberService memberService;
 	@Autowired MemberMapper mbrMapper;
 	@RequestMapping(value="/add", method=RequestMethod.POST)
+	// Autowired 는 자동으로 객체와 연결
 	public String add(@ModelAttribute Member member) {
 		logger.info("MemberController add ::: {}.", "add");
 		System.out.println("MemberController ADD 정보 " + member);
@@ -91,41 +94,46 @@ public class MemberCtrl {
 	public String login(@ModelAttribute("member") Member param, Model model,
 			HttpSession session) {
 		logger.info("MemberController login ::: {}.", "ENTER");
-		//System.out.println("MemberController login member 진입 정보 " + member);
-		/*Predicate<String> p = s -> !s.equals("");
-		System.out.println(">>>>>>>>>>>>>"+param.getUserid());
-		String r = mbrMapper.exist(param.getUserid());
-		System.out.println("++++++++++++"+r);
-		boolean b = p.test(r);
-		System.out.println("::::::::::::::::::::"+b);
-		Function<Member, String> f = (t) ->{
-			return mbrMapper.login(t);
-		};*/
-		/*System.out.println("param id >>"+param.getUserid());
-		System.out.println("param pw >>"+param.getPassword());
-		String s2 = f.apply(param);
-		System.out.println("88888 ::"+s2);*/
-		
-		/*String flag = "public:member/login.tiles";
-		
-		if(mbrMapper.login(param) != null) {
-			flag = "auth:common/content.tiles";
-			//model.addAttribute("user", memberService.retrieve(member));
-		}else {
-			flag = "public:member/login.tiles";
-		}
-		System.out.println("여기는 플래그 정보       "+flag);
-		return flag;*/
-		
-		Predicate<String> p = s -> !s.equals("");
+		//Predicate<String> p = s -> !s.equals("");	//파라미터로 받은 녀석이 null이 아니면 true 리턴
 		String view = "public:member/login.tiles";
-		if(p.test(mbrMapper.exist(param.getUserid()))) {
+		if(Util.notEm.test(mbrMapper.exist(param.getUserid()))) {
 			Function<Member, String> f = (t)->{	// Member input type, String return type. Function<input type, return type>
 				return mbrMapper.login(t);
 			};
 			view = (f.apply(param) != null) ? "auth:common/content.tiles" : "public:member/login.tiles";
 		}
+		
+		//강사님 방식
+		member = Predicate.isEqual("auth:common/content.tiles").test(view) ? 
+			mbrMapper.selectOne(param): new Member();
+		Util.Log.accept(member.toString());
+		
 		return view;
+		// 위의 코드 전 방식
+		//Predicate<String> p2 = s -> s.equals("auth:common/content.tiles");
+				/*if(Predicate.isEqual("auth:common/content.tiles").test(view)) {
+					member = mbrMapper.selectOne(param);
+				}
+				Util.Log.accept(member.toString());*/
+		//System.out.println(member);
+		
+		//처음에 해본 방식 
+		/*
+		member memInfo;
+		Function<Member, Member> f2 = (t) ->{
+		return mbrMapper.selectOne(t);
+	};*/
+	/*if(p.test(mbrMapper.exist(param.getUserid()))) {
+		Function<Member, Member> f = (t) -> {
+			return mbrMapper.selectOne(t);
+		};
+		memInfo = f.apply(param);
+		System.out.println(memInfo);
+		
+	}*/
+		/*memInfo = f2.apply(param);
+		System.out.println(memInfo);*/
+		// syso -> member 정보
 	}
 	@RequestMapping("/logout")
 	public String logout(SessionStatus session) {
