@@ -29,12 +29,107 @@ algo.main = {
 					+'</tr>'
 					+'</table>'
 					+'</div>');
-			$('#t__l').html('<a id="arith__seq"><h3>등차수열</h3></a>');
+			let $t__l = $('#t__l');
+			let $t__r = $('#t__r');
+			$("<ul />")
+			.attr({id : 'side__menu'})
+			.addClass('list-group').appendTo($t__l);
+			$('<li/>')
+			.attr({id : 'arith'})
+			.addClass('list-group-item')
+			.appendTo($('#side__menu'));
+			$('<a/>')	// 어나니머스 객체
+			.attr({href : '#'})	
+			.html('등차수열의 합')
+			.appendTo($('#arith'))
+			.click(e=>{
+				$t__r.empty();
+				//alert('등차수열 선택');
+				/*let ques = 
+					'<div id="ques"><h3>시작값 x, 마지막값 y, 공차 d 인 등차수열의 합을 구하시오.</h3>'
+					+'	<label for="시작값">시작값</label><input id="sta" type="text" value="">'
+					+'	<label for="마지막값">마지막값</label><input id="end" type="text" value="">'
+					+'	<label for="공차">공차</label><input id="d" type="text" value="">'
+					+'	<button id="bt">결과보기</button>'
+					+'	<h6 id="rs"></h6></div>';*/
+				$('<div/>')	//div태그를 만들라는 것
+				.attr({id:'ques'}).appendTo($t__r);
+				$('<h3/>')
+				.html('시작값 x, 마지막값 y, 공차 d 인 등차수열의 합을 구하시오.').appendTo($('#ques'));
+				$('<label/>').html('시작값').appendTo($('#ques'));
+				$('<input/>')
+				.attr({id:'sta', type:'text'}).appendTo($('#ques'));
+				$('<label/>').html('마지막값').appendTo('#ques');
+				$('<input/>')
+				.attr({id:'end', type:'text'}).appendTo($('#ques'));
+				$('<label/>').html('공차').appendTo($('#ques'));
+				$('<input/>')
+				.attr({id:'d', type:'text'}).appendTo($('#ques'));
+				$('<br/>').appendTo($('#ques'));
+				$('<button/>')
+				.addClass('btn btn-primary')
+				.attr({type : 'button'})
+				.html('결과보기')
+				.appendTo($('#ques'))
+				.click(e=>{
+					$('#check').remove();
+					$('<h6/>').attr({id : 'check'})
+					.empty().text(
+							($.fn.zeroChecker(
+							[$('#sta').val()*1,
+							$('#end').val()*1,
+							$('#d').val()*1])) ? '빈칸을 채우세요' : '완성하세요').appendTo('#ques');
+					
+					let sta = $('#sta').val()*1;
+					let end = $('#end').val()*1;
+					let d = $('#d').val()*1;
+					console.log(sta+', '+end+', '+d);
+					let sum = 0;
+					let i = sta;
+					while(i <= end){
+						sum += sta;
+						sta += d;
+						i++;
+					}
+					$('#t__r').append(sum);
+				}).appendTo('#ques');
+				
+				
+				//$('#t__r').append(ques);
+				
+				/*$('#bt').click(()=>{
+					//console.log(rs);
+					$('#rs').empty().text(($.fn.zeroChecker(
+						[
+						$('#sta').val()*1,
+						$('#end').val()*1,
+						$('#d').val()*1
+					])) ? '빈칸을 채우세요' : '완성하세요');
+					
+					let sta = $('#sta').val()*1;
+					let end = $('#end').val()*1;
+					let d = $('#d').val()*1;
+					console.log(sta+', '+end+', '+d);
+					let sum = 0;
+					let i = sta;
+					while(i <= end){
+						sum += sta;
+						sta+=d;
+						i++;
+					}
+					$('#t__r').append(sum);
+				});*/
+			});
+			
+			
+			
+			
+			/*$('#t__l').html('<a id="arith__seq"><h3>등차수열</h3></a>');
 			$('#t__l').append('<a id="swit__seq"><h3>스위치수열</h3></a>');
 			$('#t__l').append('<a id="fibo__seq"><h3>피보나치 수열</h3></a>');
-			$('#t__l').append('<a id="fact__seq"><h3>팩토리얼 수열</h3></a>');
+			$('#t__l').append('<a id="fact__seq"><h3>팩토리얼 수열</h3></a>');*/
 			
-			$('#arith__seq').click(e=>{
+			/*$('#arith__seq').click(e=>{
 				alert('등차수열 선택');
 				let ques = 
 					'<h3>시작값 x, 마지막값 y, 공차 d 인 등차수열의 합을 구하시오.</h3>'
@@ -67,17 +162,23 @@ algo.main = {
 					}
 					$('#t__r').append(sum);
 				});
-			});
-			$('#swit__seq').click(e=>{
+			});*/
+			/*$('#swit__seq').click(e=>{
 				let ques = 
 					'<h3>시작값 x, 마지막값 y, 공차 d 인 등차수열의 합을 구하시오.</h3>'
 					+'	<label for="시작값">시작값</label><input id="sta" type="text" value="">'
 					+'	<label for="마지막값">마지막값</label><input id="end" type="text" value="">'
 					+'	<label for="공차">공차</label><input id="d" type="text" value="">'
 					+'	<button id="bt">결과보기</button>'
+					+'	<h6 id="rs"></h6>'
 				$('#t__r').append(ques);
 				$('#bt').click(()=>{
-					
+					$('#rs').empty().text(($.fn.zeroChecker(
+							[
+							$('#sta').val()*1,
+							$('#end').val()*1,
+							$('#d').val()*1
+						])) ? '빈칸을 채우세요' : '완성하세요');
 					
 					let sta = $('#sta').val()*1;
 					let end = $('#end').val()*1;
@@ -97,16 +198,23 @@ algo.main = {
 					}
 					$('#t__r').append(sum);
 				});
-			});
-			$('#fibo__seq').click(e=>{
+			});*/
+			/*$('#fibo__seq').click(e=>{
 				let ques = 
 					'<h3>시작값 x, 마지막값 y, 피보나치수열의 합을 구하시오.</h3>'
 					+'	<label for="시작값">시작값</label><input id="sta" type="text" value="">'
 					+'	<label for="마지막값">두번째값</label><input id="end" type="text" value="">'
 					//+'	<label for="공차">공차</label><input id="d" type="text" value="">'
 					+'	<button id="bt">결과보기</button>'
+					+'	<h6 id="rs"></h6>'
 				$('#t__r').append(ques);
 				$('#bt').click(()=>{
+					$('#rs').empty().text(($.fn.zeroChecker(
+							[
+							$('#sta').val()*1,
+							$('#end').val()*1
+						])) ? '빈칸을 채우세요' : '완성하세요');
+					
 					let sta = $('#sta').val()*1;
 					let end = $('#end').val()*1;
 					let num1 = sta;
@@ -123,10 +231,30 @@ algo.main = {
 					}
 					$('#t__r').append(sum-c);
 				});
-			});
-			$('#fact__seq').click(e=>{
-				alert('팩토리얼 수열 선택');
-			});
+			});*/
+			/*$('#fact__seq').click(e=>{
+				let ques = 
+					'<h3> x의 팩토리얼을 구하시오.</h3>'
+					+'	<label for="시작값">시작값</label><input id="sta" type="text" value="">'
+					//+'	<label for="마지막값">두번째값</label><input id="end" type="text" value="">'
+					//+'	<label for="공차">공차</label><input id="d" type="text" value="">'
+					+'	<button id="bt">결과보기</button>'
+					+'	<h6 id="rs"></h6>'
+				$('#t__r').append(ques);
+				$('#bt').click(()=>{
+					$('#rs').empty().text(($.fn.zeroChecker(
+							[
+							$('#sta').val()*1
+						])) ? '빈칸을 채우세요' : '완성하세요');
+					let sta = $('#sta').val()*1;
+					let sum = 1;
+					while(sta != 0){
+						sum *= sta;
+						sta--;
+					}
+					$('#t__r').append(sum);
+				});
+			});*/
 		}
 };
 algo.series = {
@@ -174,7 +302,6 @@ algo.util = {
 		onCreate : x =>{
 			$.getScript(x+'/resources/js/util.js',
 					()=>{
-						// 직접 코딩
 						algo.main.onCreate();
 					}
 			);
