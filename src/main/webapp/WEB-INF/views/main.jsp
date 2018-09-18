@@ -21,7 +21,7 @@
 	<link rel="stylesheet" href="${ctx}/resources//css/clean-blog.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-	<script src="${ctx}/resources/js/algo.js"></script>
+	<script src="${ctx}/resources/js/app.js"></script>
 </head>
 <body>
 <div id="wrapper"></div>
@@ -34,7 +34,7 @@
     <script src="${ctx}/resources/js/clean-blog.min.js"></script>
 
 <script>
-	algo.init('${ctx}');
+	app.init('${ctx}');
 	/* app.init('${ctx}'); */
 	/* $('#login_btn').on('click', function(){alert('로그인 버튼 클릭 2');}); */
 </script>

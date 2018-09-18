@@ -19,3 +19,9 @@ $.prototype.zeroChecker=x=>{	// jQuery에 넣어놔라는 의미
     }
     return flag;
 }
+
+$.prototype.anchor = x =>{
+    return $('<a/>')
+   .attr({href : '#'})
+   .html(x.txt)
+}

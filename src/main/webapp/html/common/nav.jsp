@@ -16,6 +16,9 @@
               <a class="nav-link" href="search_btn">Search</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" id="board_list">게시판</a>
+            </li>
+            <li class="nav-item">
             	<a class="nav-link" id="login_btn" >Login</a>
             </li>
             <li class="nav-item">
