@@ -11,19 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.gms.web.mbr.Member;
-import com.gms.web.mbr.MemberService;
 
 @Controller
 @RequestMapping("/board")
 public class BoardCtrl {
 	static final Logger logger = LoggerFactory.getLogger(BoardCtrl.class);
 	@Autowired Article article;
-	@Autowired MemberService memberService;
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String add(@ModelAttribute Member member) {
 		logger.info("MemberController add ::: {}.", "add");
 		System.out.println("ADD 1 " + member);
-		memberService.add(member);
 		/*Map<String, Object> p = new HashMap<>();
 		p.put("add", member);
 		System.out.println("name is "+ member.getName());*/
@@ -73,8 +70,6 @@ public class BoardCtrl {
 		logger.info("MemberController modify!!! ::: {}.", "ENTER");
 		System.out.println("modify 1 " + member.getUserid());
 		//member.setuserid(userid);
-		memberService.modify(member);
-		model.addAttribute("user", memberService.retrieve(member));
 		//MemberDTO m = memberService.retrieve(userid);
 		//model.addAttribute("user", m);
 		return "retrieve_page";
@@ -83,7 +78,6 @@ public class BoardCtrl {
 	public String remove(@ModelAttribute("member") Member member, Model model) {
 		logger.info("MemberController remove ::: {}.", "ENTER");
 		System.out.println("remove 1 " + member.getUserid());
-		memberService.remove(member);
 		return "redirect:/";
 	}
 	@RequestMapping(value="/login", method=RequestMethod.POST)

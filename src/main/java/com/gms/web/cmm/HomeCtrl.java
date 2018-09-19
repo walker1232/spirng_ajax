@@ -28,7 +28,7 @@ public class HomeCtrl {
 	@RequestMapping(value = "/", method = RequestMethod.GET)						// mapping은 key와 value를 준 것. 만약 redilect를 하면 move를 타지않고 home을 타게 된다
 	public String home(Model model, HttpServletRequest request) {			// 여기서의 Model은 POM.xml에서 전역으로 정의된 것 Model안에는 request가 들어있음..
 		
-		model.addAttribute("ctx", Util.ctx.apply(request));
+		model.addAttribute("ctx", Util1.ctx.apply(request));
 		
 		return "main";
 	}

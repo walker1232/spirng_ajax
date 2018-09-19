@@ -1,6 +1,6 @@
 function headerUI(){
 	return '<!-- Page Header -->'
-+'<header id = "header" class="masthead" style="background-image: url("${ctx}/resources/img/home-bg.jpg")">'
++'<header id = "header" class="masthead" style="background-image: url("resources/img/home-bg.jpg")">'
 +'  <div class="overlay"></div>'
 +'  <div class="container">'
 +'    <div class="row">'

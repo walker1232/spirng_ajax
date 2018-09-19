@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gms.web.cmm.Util;
+import com.gms.web.cmm.Util1;
 
 @RestController
 @RequestMapping("/algo")
@@ -21,13 +21,13 @@ public class AlgoCtrl {
 	static final Logger logger = LoggerFactory.getLogger(AlgoCtrl.class);
 	@GetMapping("/money/{money}")
 	public void money(@PathVariable String money) {
-		Util.Log.accept("넘어온 화폐값: "+ money);
+		Util1.Log.accept("넘어온 화폐값: "+ money);
 	}
 	@PostMapping("/money/")
 	public @ResponseBody Map<String, Object> 
 		money2(@RequestBody Map<String, Object>map) {
 		Map<String, Object>rmap = new HashMap<>();
-		Util.Log.accept("넘어온 화폐값: "+map.get("money"));
+		Util1.Log.accept("넘어온 화폐값: "+map.get("money"));
 		rmap.put("test", "축하축하 !!");
 		return rmap;	// 데이터 값을 리턴하고 있음
 	}
