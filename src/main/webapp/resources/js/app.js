@@ -32,7 +32,7 @@ app.main = (()=>{
 		onCreate();
 	};
 	var onCreate =()=>{
-		setContentView();
+		setContentView();	//화면구성 (이벤트 걸기 전)
 	};
 	var setContentView =()=>{
 		//console.log('step2');
@@ -42,10 +42,10 @@ app.main = (()=>{
 		});*/
         // 자스 Promise 비동기 로직 다루기
        $.when(
-            /*$.getScript($.script()+'/header.js'),
+            $.getScript($.script()+'/header.js'),
             $.getScript($.script()+'/nav.js'),
             $.getScript($.script()+'/content.js'),
-            $.getScript($.script()+'/footer.js'),*/
+            $.getScript($.script()+'/footer.js'),
     		$.getScript(header),
     		$.getScript(nav),
     		$.getScript(content),
@@ -84,72 +84,101 @@ app.main = (()=>{
 app.permission = (()=>{
 	var login =()=>{
 		alert('login');
-		$.getScript($.script()+"/login.js", ()=>{
-			$('#content').html(loginUI());
-			$('#login_submit').click(e=>{
-				//alert('로그인 전송 버튼 클릭');
-				$.ajax({
-					url : $.ctx()+'/member/login',
-					method : 'POST',
-					contentType : 'application/json',
-					data : JSON.stringify({userid : $('#userid').val(), password : $('#password').val()}),
-					success : d=>{
-						alert('ID 판단::'+d.ID);
-						alert('PW 판단::'+d.PW);
-						alert('MBR 판단::'+d.MBR);
-						if(d.ID==="WRONG"){
-							alert('ID 없음');
-							$('#content').html(loginUI());
-						}else if(d.PW==="WRONG"){
-							alert('PW 일치하지 않음');
-							$('#content').html(loginUI());
-						}else{
-							app.router.home();
-							alert('로그인 성공');
+		$.getScript($.script()+'/compo.js',()=>{
+			$.getScript($.script()+"/login.js", ()=>{
+				$('#content').html(loginUI());
+				ui.anchor({id:'login_submit',txt:'로그인'})
+				.css({'width':'300px'})
+				.addClass('btn-primary')
+				.appendTo($("#content"))
+				.click(e=>{
+					//alert('로그인 전송 버튼 클릭');
+					$.ajax({
+						url : $.ctx()+'/member/login',
+						method : 'POST',
+						contentType : 'application/json',
+						data : JSON.stringify({userid : $('#userid').val(), password : $('#password').val()}),
+						success : d=>{
+							alert('ID 판단::'+d.ID);
+							alert('PW 판단::'+d.PW);
+							alert('MBR 판단::'+d.MBR);
+							if(d.ID==="WRONG"){
+								alert('ID 없음');
+								$('#content').html(loginUI());
+							}else if(d.PW==="WRONG"){
+								alert('PW 일치하지 않음');
+								$('#content').html(loginUI());
+							}else{
+								app.router.home();
+								alert('로그인 성공');
+							}
+						},
+						error : (m1,m2,m3)=>{
+							alert('에러발생'+m1);
+							alert('에러발생'+m2);
+							alert('에러발생'+m3);
 						}
-					},
-					error : (m1,m2,m3)=>{
-						alert('에러발생'+m1);
-						alert('에러발생'+m2);
-						alert('에러발생'+m3);
-					}
+					});
 				});
+				
 			});
-			
-		});
+		});	//옵저버 패턴 //콜백을 사용하지 않으면 람다가 아니다
+		
 	};
 	var add =()=>{
 		alert('add');
-		//$('#content').empty();
-		$.getScript($.script()+"/add.js", ()=>{
-			$('#content').html(addUI());
-			$('#add_submit').click(e=>{
-				$.ajax({
-					url : $.ctx()+'/member/add',
-					method : 'POST',
-					contentType : 'application/json',
-					data : JSON.stringify({userid : $('#userid').val(),
-										   name : $('#name').val(),
-										   password : $('#password').val(),
-										   ssn : $('#ssn').val(),
-										   teamid : $('#teamid').val(),
-										   roll : $('#roll').val(),
-										   subject : $('#subject').val()
-										   }),
-					success : d=>{
-						alert('회원가입 버튼 전송 클릭');
-						$.getScript($.script()+"/login.js", ()=>{
-							$('#content').html(loginUI());
-						});
-					},
-					error : (m1,m2,m3)=>{
-						alert('에러발생'+m1);
-						alert('에러발생'+m2);
-						alert('에얼발생'+m3);
+		$.getScript($.script()+'/compo.js',()=>{
+			$.getScript($.script()+"/add.js", ()=>{
+				$('#content').html(addUI());
+				/*$("[name='subject']")
+				.change(function(){	//이벤트 줄 때 사용
+					alert($(this).val());
+				});*/
+				ui.anchor({id:'add_submit',txt:'가입'})
+				.css({'width':'300px'})
+				.addClass('btn-primary')
+				.appendTo($("#content"))
+				.click(e=>{
+					e.preventDefault();
+					var arr = [];
+					var sub = $("[name='subject']");
+					let i;
+					for(i of sub){
+						if(i.checked){
+							alert('선택된 과목::'+i.value);
+							arr.push(i.value);
+						}
 					}
+					$.ajax({
+						url : $.ctx()+'/member/add',
+						method : 'POST',
+						contentType : 'application/json',
+						data : JSON.stringify({userid : $('#userid').val(),
+											   name : $('#name').val(),
+											   password : $('#password').val(),
+											   ssn : $('#ssn').val(),
+											   teamid : $('[name=teamid]:checked').val(),
+											   //teamid : $('#teamid').val(),
+											   roll : $('#roll').val(),
+											   subject : JSON.stringify(arr)
+											   }),
+						success : d=>{
+							alert('회원가입 버튼 전송 클릭');
+							app.permission.login();
+							/*$.getScript($.script()+"/login.js", ()=>{
+								$('#content').html(loginUI());
+							});*/
+						},
+						error : (m1,m2,m3)=>{
+							alert('에러발생'+m1);
+							alert('에러발생'+m2);
+							alert('에얼발생'+m3);
+						}
+					});
 				});
 			});
 		});
+		
 	};
 	return {login : login, add : add};
 })();

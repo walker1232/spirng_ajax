@@ -41,6 +41,7 @@ public class MemberCtrl {
 		Util1.Log.accept("넘어온 조인 정보"+ pm);
 		pm.setAge(tae.ageAndGender.apply(pm).getAge());
 		pm.setGender(tae.ageAndGender.apply(pm).getGender());
+		Util1.Log.accept("회원정보: "+pm.getAge() + pm.getGender());
 		//Map<String,Object> rmap = new HashMap<>();
 	}
 	@RequestMapping("/list")
@@ -117,25 +118,13 @@ public class MemberCtrl {
 		rm.put("PW", pwValid);
 		rm.put("MBR", mbr);
 		return rm;
-		/*if(YoonHo.notEm.test(mbrMapper.exist(param.getUserid()))) {
-			Function<Member, String> f = (t)->{	// Member input type, String return type. Function<input type, return type>
-				return mbrMapper.login(t);
-			};
-			pwValid = (f.apply(param) != null) ? "CORRECT" : "WRONG";
-		}else {
-			idValid = "WRONG";
-		}
-		
-		mbr = Predicate.isEqual("auth:common/content.tiles").test(pwValid) ? 
-			mbrMapper.selectOne(param): new Member();*/
-		/*YoonHo.Log.accept(mbr.toString());
-		rmap.put("ID", idValid);
-		rmap.put("PW", pwValid);
-		rmap.put("MBR", mbr);
-		return rmap;*/
 		
 	}
-	
+	@RequestMapping("/logout")
+	public String logout() {
+		Util1.Log.accept("\n --------- MemberController  !!--------");
+		return "redirect:/";
+	}
 	@RequestMapping("/fileupload")
 	public void fileupload() {}
 }
