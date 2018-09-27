@@ -58,5 +58,33 @@ var ui={
          + '</div>'
          + '<input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">'
          + '</div>'
+    },
+    table : x=>{
+    	/*<div class="panel panel-default">
+    	  <!-- Default panel contents -->
+    	  <div class="panel-heading">Panel heading</div>
+
+    	  <!-- Table -->
+    	  <table class="table">
+    	    ...
+    	  </table>
+    	</div>*/
+    	//let ph = "panel-heading";
+    	let d = $('<div>').addClass('panel panel-'+x.type);
+    	let ph = $('<div>').addClass('panel-heading').html(x.head);
+    	let pb = $('<div>').addClass('panel-body').html('<p>'+x.body+'</p>');
+    	let t = $('<table/>').attr({id:x.id}).addClass(x.clazz);
+    	let thead = $('<thead/>');
+    	let tr = $('<tr/>');
+    	$.each(x.list,(i,j)=>{	//x = 배열 혹은 JSON, i = index, j = value
+    		$('<th/>').html(j).appendTo(tr);
+    	});
+    	tr.appendTo(thead);
+    	thead.appendTo(t);
+    	$('<tbody/>').appendTo(t);
+    	ph.appendTo(d);
+    	pb.appendTo(d);
+    	t.appendTo(d);
+    	return d;
     }
 }
