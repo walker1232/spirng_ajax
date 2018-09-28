@@ -83,7 +83,6 @@ app.main = (()=>{
 })();
 app.permission = (()=>{
 	var login =()=>{
-		alert('login');
 		$.getScript($.script()+'/compo.js',()=>{
 			$.getScript($.script()+"/login.js", ()=>{
 				$('#content').html(loginUI());
@@ -99,9 +98,6 @@ app.permission = (()=>{
 						contentType : 'application/json',
 						data : JSON.stringify({userid : $('#userid').val(), password : $('#password').val()}),
 						success : d=>{
-							alert('ID 판단::'+d.ID);
-							alert('PW 판단::'+d.PW);
-							alert('MBR 판단::'+d.MBR);
 							if(d.ID==="WRONG"){
 								alert('ID 없음');
 								$('#content').html(loginUI());
@@ -109,8 +105,7 @@ app.permission = (()=>{
 								alert('PW 일치하지 않음');
 								$('#content').html(loginUI());
 							}else{
-								app.router.home();
-								alert('로그인 성공');
+								app.router.home(d.MBR.userid);
 							}
 						},
 						error : (m1,m2,m3)=>{
@@ -202,7 +197,15 @@ app.board = (()=>{
 	var setContentView =()=>{
 		//alert('Board');
 		$('#content').empty();
-		$.getJSON(ctx+'/boards/1',d=>{
+		app.service.boards(1);
+		
+	};
+	return {init : init};
+})();
+app.service = {
+	boards : x=>{
+		$.getJSON($.ctx()+'/boards/'+x,d=>{
+			//console.log(d.list);
 			$.getScript($.script()+'/compo.js',()=>{
 				let x = {
 						type : 'default',
@@ -214,7 +217,7 @@ app.board = (()=>{
 				};
 				(ui.table(x))
 				.appendTo($('#content'));
-				$.each(d,(i,j)=>{
+				$.each(d.list,(i,j)=>{
 					$('<tr/>').append(
 					$('<td/>').attr('width','5%').html(j.bno),
 					$('<td/>').attr('width','10%').html(j.title),
@@ -224,13 +227,118 @@ app.board = (()=>{
 					$('<td/>').attr('width','5%').html(j.viewcnt)
 					).appendTo($('tbody'));
 				});
+				(ui.page()).appendTo($('#content'));
+				let ul = $('.pagination');
+				let existPrev = d.page.existPrev;
+		        let existNext = d.page.existNext;
+		        let prev = '';
+		        let next = '';
+		        prev =(!existPrev) ? 'disabled' : '';
+		        next =(!existNext) ? 'disabled' : '';
+		        let preli = $('<li id="prev" class="page-item '+prev+'"><span class="page-link">◀</span>');
+		        let nextli = $('<li id="next" class="page-item '+next+'"><span class="page-link">▶</span>');
+		        preli.appendTo(ul);
+		        /*nextli.click(e=>{
+		        	$.getJSON($.ctx()+'/boards/'+Number(d.page.endPage+1));
+		        	
+		        });*/
+		        for(let i = d.page.beginPage; i <= d.page.endPage; i++){
+		        	$('<li class="page-item"/>')
+		        	.addClass((i==d.page.pageNumber)? 'active':'')
+		        	.append($('<span/>')
+		        	.addClass('page-link')
+		        	.html(i)).appendTo(ul)
+		        	.click(e=>{
+		        		$('#content').empty();
+		        		app.service.boards(i);	// 재귀호출
+		        	});
+		        	
+		        	/*if(i == d.page.pageNumber()){
+	        		$('<span/>')
+					.addClass('page-link')
+					.html(i)
+					.click(e=>{
+						alert('나는 '+i+'를 눌렀다');
+					})
+					.appendTo($('<li  class="page-item"/>')
+							.addClass('active'))
+					.appendTo(ul);
+	        	}else{
+	        		$('<span/>')
+					.addClass('page-link')
+					.html(i)
+					.click(e=>{
+						alert('나는 '+i+'를 눌렀다');
+					})
+					.appendTo($('<li  class="page-item"/>')
+							.addClass(''))
+					.appendTo(ul);
+	        	}*/
+		        	
+		            //$('<li class="page-item"><a class="page-link" href="#">'+i+'</a></li>').appendTo(ul).click();
+		        }
+		        nextli.appendTo(ul);
+		        $('.page-link').attr('style',"cursor:pointer");
 			});
 				
 		});
-	};
-	return {init : init};
-})();
-
+	},
+	my_board : x=>{
+		$('#content').empty();
+		alert("유효성 체크 ::::::"+ x.id + "    "+ x.pageNo);
+		$.getJSON($.ctx()+'/boards/'+x.id+'/'+x.pageNo,d=>{
+			//console.log(d.list);
+			$.getScript($.script()+'/compo.js',()=>{
+				let t = {
+						type : 'default',
+						id : 'table',
+						head : '게시판',
+						body : '오픈 게시판... 누구든지 사용가능',
+						list : ['No', '제목', '내용', '글쓴이', '작성일', '조회수'],
+						clazz : 'table table-bordered'
+				};
+				(ui.table(t))
+				.appendTo($('#content'));
+				$.each(d.list,(i,j)=>{
+					$('<tr/>').append(
+					$('<td/>').attr('width','5%').html(j.bno),
+					$('<td/>').attr('width','10%').html(j.title),
+					$('<td/>').attr('width','50%').html(j.content),
+					$('<td/>').attr('width','10%').html(j.writer),
+					$('<td/>').attr('width','10%').html(j.regdate),
+					$('<td/>').attr('width','5%').html(j.viewcnt)
+					).appendTo($('tbody'));
+				});
+				(ui.page()).appendTo($('#content'));
+				let ul = $('.pagination');
+				let existPrev = d.page.existPrev;
+		        let existNext = d.page.existNext;
+		        let prev = '';
+		        let next = '';
+		        prev =(!existPrev) ? 'disabled' : '';
+		        next =(!existNext) ? 'disabled' : '';
+		        let preli = $('<li id="prev" class="page-item '+prev+'"><span class="page-link">◀</span>');
+		        let nextli = $('<li id="next" class="page-item '+next+'"><span class="page-link">▶</span>');
+		        preli.appendTo(ul);
+		        for(let i = d.page.beginPage; i <= d.page.endPage; i++){
+		        	$('<li class="page-item"/>')
+		        	.addClass((i==d.page.pageNumber)? 'active':'')
+		        	.append($('<span/>')
+		        	.addClass('page-link')
+		        	.html(i)).appendTo(ul)
+		        	.click(e=>{
+		        		app.service.my_board({id : x.id, pageNo : i});
+		        		// 재귀호출
+		        	});
+		        	
+		        }
+		        nextli.appendTo(ul);
+		        $('.page-link').attr('style',"cursor:pointer");
+			});
+				
+		});
+	}
+};
 app.router = {
 	    init : x =>{
 	        $.getScript(x+'/resources/js/router.js',  // $.은 JQuery 객체 
@@ -243,7 +351,8 @@ app.router = {
 	                }
 	        );
 	    },
-	    home : ()=>{
+	    home : x=>{
+	    	//let userid = x;
 	    	$.when(
 	                $.getScript($.script()+'/header.js'),
 	                $.getScript($.script()+'/nav.js'),
@@ -267,7 +376,8 @@ app.router = {
 	            	//console.log('step4');
 	            	$('#board_list').click(e=>{
 	            		e.preventDefault();	// form, a 태그 무력화
-	            		app.board.init();
+	            		app.service.my_board({id : x, pageNo : 1});
+	            		//app.board.init();
 	            	});
 	            	$('#add_btn').html('마이페이지').click(e=>{
 	            		
@@ -278,3 +388,5 @@ app.router = {
 	            });
 	    }
 	};
+
+

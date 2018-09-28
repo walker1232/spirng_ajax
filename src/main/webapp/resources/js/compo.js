@@ -63,7 +63,9 @@ var ui={
     	/*<div class="panel panel-default">
     	  <!-- Default panel contents -->
     	  <div class="panel-heading">Panel heading</div>
-
+		  <div class="panel-body">
+    		<p>...</p>
+  		  </div>
     	  <!-- Table -->
     	  <table class="table">
     	    ...
@@ -86,5 +88,32 @@ var ui={
     	pb.appendTo(d);
     	t.appendTo(d);
     	return d;
+    },
+    page : x=>{
+    	
+    	return $('<ul/>').addClass('pagination')
+    			.appendTo($('<nav/>')
+    			.attr('aria-label','...'));
+    	
+/*
+ * <nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item disabled">
+      1<span class="page-link">Previous</span>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item active">
+      <span class="page-link">
+        2
+        <span class="sr-only">(current)</span>
+      </span>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#">Next</a>
+    </li>
+  </ul>
+</nav>
+ * */
     }
 }

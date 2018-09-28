@@ -1,6 +1,7 @@
 package com.gms.web.brd;
 
 import java.util.List;
+import java.util.Map;
 
 import com.gms.web.cmm.Criteria;
 import com.gms.web.cmm.SearchCriteria;
@@ -24,5 +25,7 @@ public interface BoardMapper {
  public List<String> getAttach(Integer bno);
  public void deleteAttach(Integer bno);
  public void replaceAttach(String fullName, Integer bno);
- public int count();
+ public int countAll();
+ public List<Board> userBrdList(Map<?,?> p);
+ public int userCount(Map<?,?> p);
 }

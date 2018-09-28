@@ -1,5 +1,7 @@
 package com.gms.web.page;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import javafx.scene.control.Pagination;
@@ -10,7 +12,7 @@ public class PageProxy implements Proxy{
     private HttpServletRequest request;
     
 	@Override
-	public void carryOut(Object o) {
+	public void carryOut(Map<?,?> p) {
 		 this.pagination = new Pagination();
 		
 	}

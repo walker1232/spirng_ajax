@@ -1,5 +1,7 @@
 package com.gms.web.page;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -10,17 +12,15 @@ import lombok.Data;
 @Component
 @Data @Lazy
 public class Pagination implements Proxy{
-	@Autowired BoardMapper brdMap;
 	private int pageNumber, pageSize, blockSize, rowCount, pageCount, blockCount,
 	beginRow, endRow, prevBlock, nextBlock, beginPage, endPage;
 boolean existPrev, existNext;
 @Override
-public void carryOut(Object o) {
-	this.pageNumber = (int)o;
+public void carryOut(Map<?,?> p) {
+	this.pageNumber = Integer.parseInt(p.get("pageNumber").toString());//(int)p.get("pageNumber");
 	this.pageSize = 5;
 	this.blockSize = 5;
-	//this.rowCount = MemberServiceImpl.getinstance().count();
-	this.rowCount = brdMap.count();
+	this.rowCount = Integer.parseInt(p.get("rowCount").toString());//(int)p.get("rowCount");
 	this.pageCount = rowCount%pageSize == 0? rowCount/pageSize: rowCount/pageSize+1;
 	
 	this.blockCount = pageCount%blockSize == 0? pageCount/blockSize: pageCount/blockSize+1;
