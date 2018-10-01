@@ -7,7 +7,9 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,7 +62,7 @@ public class BoardCtrl {
 		page.carryOut(map);
 		
 		map.put("beginRow", page.getBeginRow());
-		map.put("endRow", page.getEndRow());	
+		map.put("endRow", page.getEndRow());
 		Util1.Log.accept("beginRow:::::" + map.get("beginRow"));
 		Util1.Log.accept("endRow:::::" + map.get("endRow"));
 		Util1.Log.accept("id:::::" + map.get("id"));
@@ -74,8 +76,14 @@ public class BoardCtrl {
 		Util1.Log.accept("리스트:::::" + map.get("page"));
 		return map;
 	}
+	@RequestMapping("/boards_add")
+	public void add(@RequestBody Board pb) {
+		logger.info("BoardController  ::: {}.", "add");
+		Util1.Log.accept("넘어온 add 정보" + pb);
+		//brdMap.create(pb);
+	}
 }
-
+	
 
 /*
  * Util1.Log.accept("로그인 후 넘어온 페이지 :"+pageNo);

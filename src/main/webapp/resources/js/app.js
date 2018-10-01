@@ -277,7 +277,11 @@ app.service = {
 		        	
 		            //$('<li class="page-item"><a class="page-link" href="#">'+i+'</a></li>').appendTo(ul).click();
 		        }
-		        nextli.appendTo(ul);
+		        nextli.appendTo(ul).click(e=>{
+		        	if(existNext){
+		        		app.service.my_board({id:x.id, pageNo:i});
+		        	}
+		        });
 		        $('.page-link').attr('style',"cursor:pointer");
 			});
 				
@@ -285,7 +289,7 @@ app.service = {
 	},
 	my_board : x=>{
 		$('#content').empty();
-		alert("유효성 체크 ::::::"+ x.id + "    "+ x.pageNo);
+		//alert("유효성 체크 ::::::"+ x.id + "    "+ x.pageNo);
 		$.getJSON($.ctx()+'/boards/'+x.id+'/'+x.pageNo,d=>{
 			//console.log(d.list);
 			$.getScript($.script()+'/compo.js',()=>{
@@ -319,6 +323,9 @@ app.service = {
 		        next =(!existNext) ? 'disabled' : '';
 		        let preli = $('<li id="prev" class="page-item '+prev+'"><span class="page-link">◀</span>');
 		        let nextli = $('<li id="next" class="page-item '+next+'"><span class="page-link">▶</span>');
+		        let write_btn = $('<button type="button" class="btn btn-primary">게시글 작성</button>');
+		        
+		        
 		        preli.appendTo(ul);
 		        for(let i = d.page.beginPage; i <= d.page.endPage; i++){
 		        	$('<li class="page-item"/>')
@@ -333,11 +340,49 @@ app.service = {
 		        	
 		        }
 		        nextli.appendTo(ul);
+		        write_btn.appendTo(ul).click(e=>{
+		        		$('#content').empty();
+		        		let write_page = $('<div class="form-group">');
+		        		$('<label for="title">글제목</label>').appendTo(write_page);
+		        		$('<textarea class="form-control" rows="1" id="title"></textarea>').appendTo(write_page);
+		        		$('<label for="contents">글내용</label>').appendTo(write_page);
+		        		$('<textarea class="form-control" rows="5" id="contents"></textarea>').appendTo(write_page);
+		        		$('<button id="write_submit" type="button" class ="btn btn-primary btn-md">작성 완료</button>').appendTo(write_page);
+		        		write_page.appendTo($('#content'));
+		        		$('#write_submit').click(e=>{
+		        			alert('작성완료 버튼');
+		        			app.service.my_write(
+		        			{title : $('#title').val(), content : $('#contents').val(), writer : x.id}
+		        			);
+		        			
+		        		});
+		        });
 		        $('.page-link').attr('style',"cursor:pointer");
 			});
 				
 		});
+	},
+	my_write : x=>{
+		console.log(x.title);
+		console.log(x.content);
+		console.log(x.writer);
+		$.ajax({
+			url : $.ctx()+'/boards_add',
+			method : 'post',
+			contentType : 'application/json',
+			data : JSON.stringify(
+					{title : x.title,
+					 content : x.content,
+					 writer : x.writer}),
+			success : d=>{
+				alert('전송성공');
+			},
+			error : (m1,m2,m3)=>{
+				alert('에러발생'+m1+m2+m3);
+			}
+		});
 	}
+	
 };
 app.router = {
 	    init : x =>{
@@ -375,7 +420,7 @@ app.router = {
 	            	
 	            	//console.log('step4');
 	            	$('#board_list').click(e=>{
-	            		e.preventDefault();	// form, a 태그를 무력화 시킨다
+	            		e.preventDefault();	// form, a 태그 무력화
 	            		app.service.my_board({id : x, pageNo : 1});
 	            		//app.board.init();
 	            	});
