@@ -375,7 +375,7 @@ app.router = {
 	            	
 	            	//console.log('step4');
 	            	$('#board_list').click(e=>{
-	            		e.preventDefault();	// form, a 태그 무력화
+	            		e.preventDefault();	// form, a 태그를 무력화
 	            		app.service.my_board({id : x, pageNo : 1});
 	            		//app.board.init();
 	            	});
